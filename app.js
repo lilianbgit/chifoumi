@@ -9,16 +9,18 @@ const maxScore = document.getElementById("maxScore")
 const gagner = document.getElementById("gagner")
 const resultat = document.getElementById("resultat")
 const modeDifficileCheckbox = document.getElementById("modeDifficile")
+const historique = document.getElementById("historique")
 
 const optionJoueur = "Tu as choisi "
 const optionOrdi = ". L'ordi a choisi "
-
 const choix = ["pierre", "feuille", "ciseaux"]
+
 let compteurJoueur = 0
 let compteurOrdi = 0
 let scoreMax = 5
 let jeuTermine = false;
 let modeDifficile = false;
+let historiqueTours = []
 
 btnPierre.addEventListener("click", () => {
     jouer("pierre")
@@ -96,6 +98,7 @@ function jouer(joueur) {
     }
     choisir.textContent = optionJoueur + joueur + optionOrdi + ordinateur
     resultat.textContent = gagnant
+    ajouterHistorique(joueur, ordinateur, gagnant)
     verifierFin()
 }
 
@@ -116,6 +119,24 @@ function verifierFin() {
     }
 }
 
+function ajouterHistorique(joueur, ordinateur, gagnant) {
+    historiqueTours.push({ joueur, ordinateur, gagnant })
+    afficherHistorique()
+}
+
+function afficherHistorique() {
+    if (!historique) return
+    historique.innerHTML = historiqueTours
+        .map((tour, index) => {
+            return `<div class="historique-ligne">${index + 1}. Joueur: ${tour.joueur} — Ordi: ${tour.ordinateur} — ${tour.gagnant}</div>`
+        })
+        .join("")
+}
+
+function reinitialiser() {
+    resetJeu()
+}
+
 function resetJeu() {
     document.body.style.background =
         "linear-gradient(135deg,#1e293b,#334155)"
@@ -127,4 +148,8 @@ function resetJeu() {
     resultat.textContent = ""
     gagner.textContent = ""
     jeuTermine = false;
+    historiqueTours = []
+    if (historique) {
+        historique.innerHTML = ""
+    }
 }
