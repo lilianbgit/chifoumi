@@ -1,15 +1,15 @@
-const btnPierre = document.getElementById("pierre")
-const btnFeuille = document.getElementById("feuille")
-const btnCiseaux = document.getElementById("ciseaux")
-const choisir = document.getElementById("choisir")
-const scoreJoueur = document.getElementById("scoreJoueur")
-const scoreOrdi = document.getElementById("scoreOrdi")
-const reset = document.getElementById("reset")
-const maxScore = document.getElementById("maxScore")
-const gagner = document.getElementById("gagner")
-const resultat = document.getElementById("resultat")
-const modeDifficileCheckbox = document.getElementById("modeDifficile")
-const historique = document.getElementById("historique")
+let btnPierre
+let btnFeuille
+let btnCiseaux
+let choisir
+let scoreJoueur
+let scoreOrdi
+let reset
+let maxScore
+let gagner
+let resultat
+let modeDifficileCheckbox
+let historique
 
 const optionJoueur = "Tu as choisi "
 const optionOrdi = ". L'ordi a choisi "
@@ -22,34 +22,61 @@ let jeuTermine = false;
 let modeDifficile = false;
 let historiqueTours = []
 
-btnPierre.addEventListener("click", () => {
-    jouer("pierre")
-})
+function init() {
+    btnPierre = document.getElementById("pierre")
+    btnFeuille = document.getElementById("feuille")
+    btnCiseaux = document.getElementById("ciseaux")
+    choisir = document.getElementById("choisir")
+    scoreJoueur = document.getElementById("scoreJoueur")
+    scoreOrdi = document.getElementById("scoreOrdi")
+    reset = document.getElementById("reset")
+    maxScore = document.getElementById("maxScore")
+    gagner = document.getElementById("gagner")
+    resultat = document.getElementById("resultat")
+    modeDifficileCheckbox = document.getElementById("modeDifficile")
+    historique = document.getElementById("historique")
 
-btnFeuille.addEventListener("click", () => {
-    jouer("feuille")
-})
+    if (btnPierre) {
+        btnPierre.addEventListener("click", () => {
+            jouer("pierre")
+        })
+    }
 
-btnCiseaux.addEventListener("click", () => {
-    jouer("ciseaux")
-})
+    if (btnFeuille) {
+        btnFeuille.addEventListener("click", () => {
+            jouer("feuille")
+        })
+    }
 
-modeDifficileCheckbox.addEventListener("change", (e) => {
-    modeDifficile = e.target.checked
-})
+    if (btnCiseaux) {
+        btnCiseaux.addEventListener("click", () => {
+            jouer("ciseaux")
+        })
+    }
 
-if (reset) {
-    reset.addEventListener("click", () => {
-        resetJeu()
-    })
+    if (modeDifficileCheckbox) {
+        modeDifficileCheckbox.addEventListener("change", (e) => {
+            modeDifficile = e.target.checked
+        })
+    }
+
+    if (reset) {
+        reset.addEventListener("click", () => {
+            resetJeu()
+        })
+    }
+
+    if (maxScore) {
+        maxScore.addEventListener("change", (e) => {
+            scoreMax = parseInt(e.target.value, 10) || 5;
+            resetJeu();
+        })
+    }
+
+    afficherHistorique()
 }
 
-if (maxScore) {
-    maxScore.addEventListener("change", (e) => {
-        scoreMax = parseInt(e.target.value, 10) || 5;
-        resetJeu();
-    })
-}
+document.addEventListener("DOMContentLoaded", init)
 
 
 function choixOrdinateur(joueur) {
