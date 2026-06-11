@@ -52,7 +52,7 @@ if (maxScore) {
 
 function choixOrdinateur(joueur) {
 
-    if (modeDifficile && Math.random() < 0.7) {
+    if (modeDifficile && Math.random() > 0.8) {
 
         if (joueur === "pierre") return "feuille"
         if (joueur === "feuille") return "ciseaux"
@@ -73,14 +73,8 @@ function determinerGagnant(joueur, ordinateur) {
         (joueur === "feuille" && ordinateur === "pierre") ||
         (joueur === "ciseaux" && ordinateur === "feuille")
     ) {
-
-        compteurJoueur++
-        scoreJoueur.textContent = compteurJoueur
         return "Tu gagnes";
     }
-
-    compteurOrdi++
-    scoreOrdi.textContent = compteurOrdi
     return "L'ordinateur gagne";
 }
 
@@ -91,6 +85,15 @@ function jouer(joueur) {
 
     const ordinateur = choixOrdinateur(joueur)
     const gagnant = determinerGagnant(joueur, ordinateur)
+
+    if (gagnant === "Tu gagnes") {
+        compteurJoueur++
+        scoreJoueur.textContent = compteurJoueur
+    }
+    else if (gagnant === "L'ordinateur gagne") {
+        compteurOrdi++;
+        scoreOrdi.textContent = compteurOrdi;
+    }
     choisir.textContent = optionJoueur + joueur + optionOrdi + ordinateur
     resultat.textContent = gagnant
     verifierFin()
